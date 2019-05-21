@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+import sys, os, argparse, configparser
+
+CONFIG_PREFIX = 'AL'
+
+def die(err = None):
+    if err:
+        print(str(err), file = sys.stderr)
+    sys.exit(1)
+
+def initialize():
+    arg_parser = argparse.ArgumentParser(description = 'Compile altline themes')
+    arg_parser.add_argument('theme', type = str, help = 'input theme ini file')
+    arg_parser.add_argument('output', type = str, help = 'generate file')
+    return arg_parser.parse_args()
+
+def checks(filename):
+    if not os.access(filename, os.R_OK):
+        die( f'{filename} unreadable.' )
+
+def compile(filename):
+    checks(filename)
+    config = configparser.ConfigParser()
+    outbuf = []
+    try:
+        config.read(filename)
+        for section in config.sections():
+            for (key, val) in config.items(section):
+                setting = '_'.join([CONFIG_PREFIX, section, key])
+                if val in ['false', 'no']:
+                    continue
+                if key in ['bg', 'fg']:
+                    val = color_hex_to_term(val)
+                outbuf.append(setting.upper() + '="' + val + '"')
+    except configparser.MissingSectionHeaderError as err:
+        die( 'invalid ini file' )
+    return outbuf
+
+def color_hex_to_term(hexcolor):
+    color = hexcolor.lstrip('#')
+    if len(color) != 6:
+        die('invalid hex color')
+    termcolor = ';'.join(str(int(color[i:i+2], 16)) for i in (0, 2, 4)) + 'm'
+    return termcolor
+
+def generatefile(filename, content):
+    try:
+        output = open(filename, 'w+')
+        output.write('\n'.join(content))
+        output.close()
+    except:
+        die('error while writing output')
+
+if __name__ == '__main__':
+    args = initialize()
+    generatefile(filename = args.output, content = compile(filename = args.theme))
