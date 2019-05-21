@@ -15,12 +15,7 @@ def initialize():
     arg_parser.add_argument('output', type = str, help = 'generate file')
     return arg_parser.parse_args()
 
-def checks(filename):
-    if not os.access(filename, os.R_OK):
-        die( f'{filename} unreadable.' )
-
 def compile(filename):
-    checks(filename)
     config = configparser.ConfigParser()
     outbuf = []
     try:
