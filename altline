@@ -1,0 +1,66 @@
+[ ! $AL_CORE_THEME ] && source /usr/share/bash-altline/themes/default
+
+[ ! $AL_VCS_NOGIT ] && command -v git &>/dev/null || AL_VCS_NOGIT=true
+[ ! $AL_VCS_NOHG ]  && command -v hg &>/dev/null  || AL_VCS_NOHG=true
+
+_al_ssh_tty()
+{
+	local OLD_STATUS=$?
+	[ ! -z "$SSH_TTY" ] && echo '[SSH]'
+	return $OLD_STATUS
+}
+
+_al_exit_code()
+{
+	if [[ $? != 0 ]]; then echo "$AL_PROMPT_ERROR "; fi
+}
+
+_al_vcs_context()
+{
+	local OLD_STATUS=$?
+	[[ ! $AL_VCS_NOGIT ]] && \
+		_branch=`git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+	[[ ! $AL_VCS_NOHG ]] && [[ -z "$_branch" ]] && \
+		_branch=`hg branch 2>/dev/null`
+	if [[ ! $AL_VCS_NOGIT ]] || [[ ! $AL_VCS_NOHG ]]; then
+		if [[ ! -z "$_branch" ]]; then
+			echo -ne "\001\e[38;2;$AL_VCS_FG\002\001\e[48;2;$AL_VCS_BG\002 $AL_VCS_ICON $_branch "
+		fi
+		echo -ne "\001\e[48;2;$AL_CONTEXT_BG\002\001\e[38;2;$AL_VCS_BG\002$AL_CORE_SEP"
+	fi
+	if [[ ! -z "$_PROJECT" ]]; then
+		echo -ne "\001\e[1;38;2;$AL_CONTEXT_FG\002\001\e[48;2;$AL_CONTEXT_BG\002 $_PROJECT "
+	fi
+	echo -ne "\001\e[48;2;$($AL_CORE_ZEN && echo "$AL_CWD_BG" || echo "$AL_PROMPT_BG")\002\001\e[38;2;$AL_CONTEXT_BG\002$AL_CORE_SEP"
+	return $OLD_STATUS
+}
+
+_al_cwd()
+{
+	local OLD_STATUS=$?
+	local _CWD="`realpath "$PWD"`/"
+	if [[ ! $PS1_PWD_PLAIN ]]; then
+		[[ `bp` ]] && _CWD=${_CWD/#"`bp`/"/"$AL_CWD_CONTEXT/"}
+		_CWD=${_CWD/#$HOME/"$AL_CWD_HOME"}
+		[ "$PWD" == "/" ] && _CWD="$AL_CWD_ROOT/" || _CWD=${_CWD/#"/"/"$AL_CWD_ROOT/"}
+		echo -ne ${_CWD%/} | sed "s/\// $AL_CWD_SEP /g"
+	else
+		_CWD=${_CWD/#$HOME/'~'}
+		echo -ne ${_CWD%/}
+	fi
+	return $OLD_STATUS
+}
+
+al_zen()
+{
+	AL_CORE_ZEN=true
+	PS1="\n\$(_al_vcs_context)\[\e[0m\]\[\e[1;38;2;$AL_CWD_FG\]\[\e[48;2;$AL_CWD_BG\] \$(_al_cwd) \[\e[0m\]\[\e[38;2;$AL_CWD_BG\]$AL_CORE_SEP\n\[\e[38;2;$AL_PROMPT_FG\]\[\e[48;2;$AL_PROMPT_BG\] \$(_al_exit_code)\\$ \[\e[0m\]\[\e[38;2;$AL_PROMPT_BG\]$AL_CORE_SEP\[\e[0m\] "
+}
+
+al_default()
+{
+	AL_CORE_ZEN=false
+	PS1="\n\[\e[0m\]\[\e[38;2;235;219;178m\]\[\e[48;2;60;56;54m\]\$(_al_ssh_tty) \u\[\e[1;38;2;235;219;178m\]@\h \[\e[48;2;$AL_CWD_BG\]\[\e[38;2;60;56;54m\]$AL_CORE_SEP\[\e[1;38;2;$AL_CWD_FG\]\[\e[48;2;$AL_CWD_BG\] \$(_al_cwd) \[\e[0m\]\[\e[38;2;$AL_CWD_BG\]$AL_CORE_SEP\n\$(_al_vcs_context)\[\e[0m\]\[\e[38;2;$AL_PROMPT_FG\]\[\e[48;2;$AL_PROMPT_BG\] \$(_al_exit_code)\\$ \[\e[0m\]\[\e[38;2;$AL_PROMPT_BG\]$AL_CORE_SEP\[\e[0m\] "
+}
+
+# vim:ft=sh
