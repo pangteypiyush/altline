@@ -17,7 +17,7 @@ def initialize():
 
 def compile(filename):
     config = configparser.ConfigParser()
-    outbuf = []
+    outbuf = [CONFIG_PREFIX + '_CORE_THEME=true']
     try:
         config.read(filename)
         for section in config.sections():
