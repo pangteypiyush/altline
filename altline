@@ -60,7 +60,7 @@ al_zen()
 {
 	_al_check_theme
 	AL_CORE_ZEN=true
-	PS1="\n\$(_al_vcs_context)\[\e[0m\]\[\e[1;38;2;$AL_CWD_FG\]\[\e[48;2;$AL_CWD_BG\] \$(_al_cwd) \[\e[0m\]\[\e[38;2;$AL_CWD_BG\]$AL_CORE_SEP\n\[\e[38;2;$AL_PROMPT_FG\]\[\e[48;2;$AL_PROMPT_BG\] \$(_al_exit_code)\\$ \[\e[0m\]\[\e[38;2;$AL_PROMPT_BG\]$AL_CORE_SEP\[\e[0m\] "
+	PS1="\n\$(_al_vcs_context)\[\e[0m\]\[\e[1;38;2;$AL_CWD_FG\]\[\e[48;2;$AL_CWD_BG\] \$(_al_cwd) \[\e[0m\]\[\e[38;2;$AL_CWD_BG\]$AL_CORE_SEP\n\[\e[38;2;$AL_PROMPT_FG\]\[\e[48;2;$AL_PROMPT_BG\]\$(_al_ssh_tty) \$(_al_exit_code)\\$ \[\e[0m\]\[\e[38;2;$AL_PROMPT_BG\]$AL_CORE_SEP\[\e[0m\] "
 }
 
 al_default()
