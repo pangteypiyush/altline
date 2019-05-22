@@ -2,7 +2,7 @@
 
 pkgname=bash-altline
 pkgver=1.0.0e7e0b5
-_pkgver=1.0
+_pkgver=1.1
 pkgrel=1
 pkgdesc='altline for bash'
 arch=('any')
