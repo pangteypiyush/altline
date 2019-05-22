@@ -44,7 +44,7 @@ _al_cwd()
 {
 	local OLD_STATUS=$?
 	local _CWD="`realpath "$PWD"`/"
-	if [[ ! $PS1_PWD_PLAIN ]]; then
+	if [ ! -z "$AL_CWD_FANCY" ] && $AL_CWD_FANCY; then
 		[[ `bp` ]] && _CWD=${_CWD/#"`bp`/"/"$AL_CWD_CONTEXT/"}
 		_CWD=${_CWD/#$HOME/"$AL_CWD_HOME"}
 		[ "$PWD" == "/" ] && _CWD="$AL_CWD_ROOT/" || _CWD=${_CWD/#"/"/"$AL_CWD_ROOT/"}
