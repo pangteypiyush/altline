@@ -4,6 +4,16 @@
 
 A dirty powerline alternative.
 
+## Usage
+
+```sh
+# default
+echo 'source /usr/share/bash-altline/altline && al_zen' >> ~/.bashrc
+
+# zen
+echo 'source /usr/share/bash-altline/altline && al_default' >> ~/.bashrc
+```
+
 ## default
 
 Context
