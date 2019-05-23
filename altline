@@ -45,7 +45,7 @@ _al_cwd()
 	local OLD_STATUS=$?
 	local _CWD="`realpath "$PWD"`/"
 	if [ ! -z "$AL_CWD_FANCY" ] && $AL_CWD_FANCY; then
-		[[ `bp` ]] && _CWD=${_CWD/#"`bp`/"/"$AL_CWD_CONTEXT/"}
+		command -v bp &>/dev/null && [ `bp` ] && _CWD=${_CWD/#"`bp`/"/"$AL_CWD_CONTEXT/"}
 		_CWD=${_CWD/#$HOME/"$AL_CWD_HOME"}
 		[ "$PWD" == "/" ] && _CWD="$AL_CWD_ROOT/" || _CWD=${_CWD/#"/"/"$AL_CWD_ROOT/"}
 		echo -ne ${_CWD%/} | sed "s/\// $AL_CWD_SEP /g"
