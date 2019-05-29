@@ -6,6 +6,8 @@ A dirty powerline alternative.
 
 ## Usage
 
+Recommended font [NerdFonts](https://github.com/ryanoasis/nerd-fonts)
+
 ```sh
 # default
 echo 'source /usr/share/bash-altline/altline && al_zen' >> ~/.bashrc
@@ -14,7 +16,7 @@ echo 'source /usr/share/bash-altline/altline && al_zen' >> ~/.bashrc
 echo 'source /usr/share/bash-altline/altline && al_default' >> ~/.bashrc
 ```
 
-## default
+## Default
 
 Context
 
@@ -28,7 +30,7 @@ Root
 
 ![root](https://raw.githubusercontent.com/pangteypiyush/altline/screenshot/root-default-1.png)
 
-## zen
+## Zen
 
 Context
 
@@ -41,3 +43,17 @@ Home
 Root
 
 ![root](https://raw.githubusercontent.com/pangteypiyush/altline/screenshot/root-1.png)
+
+## Themes
+
+Default
+
+![default](https://raw.githubusercontent.com/pangteypiyush/altline/screenshot/default-1.png)
+
+Onyx
+
+![onyx](https://raw.githubusercontent.com/pangteypiyush/altline/screenshot/onyx-1.png)
+
+Onyx arrow
+
+![onyxarrow](https://raw.githubusercontent.com/pangteypiyush/altline/screenshot/onyx_arrow-1.png)
