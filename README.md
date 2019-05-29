@@ -16,6 +16,19 @@ echo 'source /usr/share/bash-altline/altline && al_zen' >> ~/.bashrc
 echo 'source /usr/share/bash-altline/altline && al_default' >> ~/.bashrc
 ```
 
+## Customization
+
+```sh
+# download default theme source
+curl https://raw.githubusercontent.com/pangteypiyush/altline/master/themes_src/default.ini -o ~/.custom.ini
+
+# build theme
+mktheme ~/.custom.ini ~/.custom
+
+# source custom theme in bashrc
+source ~/.custom && al_default
+```
+
 ## Default
 
 Context
