@@ -36,6 +36,8 @@ def compile(filename):
 
 def color_hex_to_term(hexcolor):
     color = hexcolor.lstrip('#')
+    if len(color) == 3:
+        color = ''.join(color[i] * 2 for i in (0, 1, 2))
     if len(color) != 6:
         raise Exception('invalid hex color')
     termcolor = ';'.join(str(int(color[i:i+2], 16)) for i in (0, 2, 4)) + 'm'
