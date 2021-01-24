@@ -33,8 +33,8 @@ _al_vcs_context()
 		fi
 		echo -ne "\001\e[48;2;$AL_CONTEXT_BG\002\001\e[38;2;$AL_VCS_BG\002$AL_CORE_SEP"
 	fi
-	if [[ ! -z "$_PROJECT" ]]; then
-		echo -ne "\001\e[1;38;2;$AL_CONTEXT_FG\002\001\e[48;2;$AL_CONTEXT_BG\002 $_PROJECT "
+	if [[ ! -z "$PROJECT" ]]; then
+		echo -ne "\001\e[1;38;2;$AL_CONTEXT_FG\002\001\e[48;2;$AL_CONTEXT_BG\002 $PROJECT "
 	fi
 	echo -ne "\001\e[48;2;$($AL_CORE_ZEN && echo "$AL_CWD_BG" || echo "$AL_PROMPT_BG")\002\001\e[38;2;$AL_CONTEXT_BG\002$AL_CORE_SEP"
 	return $OLD_STATUS

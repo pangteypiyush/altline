@@ -1,8 +1,7 @@
 # Maintainer: Piyush Pangtey <gokuvsvegita at gmail dot com>
 
 pkgname=bash-altline
-pkgver=1.0.0e7e0b5
-_pkgver=1.1
+pkgver=0.1
 pkgrel=1
 pkgdesc='altline for bash'
 arch=('any')
@@ -23,7 +22,7 @@ sha256sums=(
 )
 
 pkgver() {
-    printf '%s.%s' "$_pkgver" "$(git rev-parse --short HEAD)"
+    git describe --tags --always | sed -e 's;-;.;g'
 }
 
 package() {
